@@ -27,34 +27,69 @@
                 <div id="body_header">
                     <div id="obj_logo"></div>
                     <div id="obj_user_login">
-                        <form method="post" action="<?=$this->createUrl('/site/login')?>">
+                        <?php if(Yii::app()->user->isGuest) : ?>
+                        <?php 
+                        $login = new LoginForm;
+                        $form=$this->beginWidget('CActiveForm', array(
+                            'id'=>'loginbar-form',
+                            'action'=>$this->createUrl('/site/login'),
+                            'enableClientValidation'=>false,
+                            'htmlOptions'=>array(
+                            ),
+                        )); ?>
+                            <script>
+                                if (navigator.userAgent.toLowerCase().indexOf("chrome") >= 0) {
+                                $(window).load(function(){
+                                    $('input:-webkit-autofill').each(function(){
+                                        var text = $(this).val();
+                                        var name = $(this).attr('name');
+                                        $(this).after(this.outerHTML).remove();
+                                        $(this).val(text);
+                                    });
+                                });}
+                            </script>
                             <table>
                                 <tr>
                                     <td width="70%">
                                         <table cellspacing="3">
                                             <tr>
                                                 <td>משתמש:</td>
-                                                <td><input type="text" name="user_username" class="input_text_medium" /></td>
+                                                <td>
+                                                    <?php echo $form->textField($login,'username',array(
+                                                    'class'=>'input_text_medium',
+                                                        'placeholder'=>$login->getAttributeLabel('username'),
+                                                    )); ?>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>סיסמא:</td>
-                                                <td><input type="password" name="user_password" class="input_text_medium" /></td>
+                                                <td>
+                                                    <?php echo $form->passwordField($login,'password',array(
+                                                        'class'=>'input_text_medium',
+                                                        'placeholder'=>$login->getAttributeLabel('password'),
+                                                    )); ?>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
                                     <td width="30%" align="center">
-                                        <input type="submit" name="user_submit" value="התחבר" class="input_submit_large" />
+                                        <input class="input_submit_large" name="LoginForm[submit]" value="התחבר" type="submit" />
                                     </td>
                                 </tr>
                             </table>
-                        </form>
+                        <?php $this->endWidget(); ?>
+                        <?php else : ?>
+                            <div id="welcome">
+                                ברוך הבא <?php echo Yii::app()->user->name; ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div id="body_navbar" class="color_blue">
                     <?php $this->widget('zii.widgets.CMenu',array(
 					'items'=>array(
 						array('label'=>'בית', 'url'=>array('/site/index')),
-						array('label'=>'כתבות', 'url'=>array('/site/page', 'view'=>'about')),
+						array('label'=>'כתבות', 'url'=>array('/posts/view')),
 						array('label'=>'סיקורים', 'url'=>array('/site/contact')),
                         array('label'=>'משחקים אחרונים', 'url'=>array('/site/contact')),
 					),
