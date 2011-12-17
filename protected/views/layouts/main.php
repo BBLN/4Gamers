@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/tabs.css" />
     </head>
     
-    <body class="color_bluer">
+    <body class="bg">
         <div class="sub_wrapper">
 			
 		</div>
@@ -64,13 +64,13 @@
                 </div>
                 <div id="body_content" class="color_blue">
                     <div class="block_raw">
-                        <span class="padding_5 color_steel display_block border_bottom">
+                        <span class="padding_5 title_block display_block border_bottom">
                             <?php $this->widget('zii.widgets.CBreadcrumbs', array(
                                 'links'=>$this->breadcrumbs,
                                 'separator'=>' › ',
                                 'homeLink'=>CHtml::link('בית', Yii::app()->homeUrl),
                                 'tagName'=>'h5',
-                                'htmlOptions'=>array('id'=>'navigation',),
+                                'htmlOptions'=>array('id'=>'navigation','class'=>'text_red',),
                             )); ?><!-- breadcrumbs -->
                         </span>
                     </div>
